@@ -10,5 +10,15 @@ pipeline {
                 sh 'make test'
             }
         }
+        stage('Build&Push') {
+            steps {
+                sh "make image push TARGETARCH=${params.ARCH}"
+            }
+        }
+        stage('Clean') {
+            steps {
+                sh 'make clean TARGETARCH=${params.ARCH}'
+            }
+        }
     }
 }
