@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                sh 'make clean TARGETARCH=${params.ARCH}'
+                sh "make clean TARGETARCH=${params.ARCH}"
             }
         }
     }
