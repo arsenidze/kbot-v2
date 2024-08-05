@@ -10,9 +10,19 @@ pipeline {
                 sh 'make test'
             }
         }
-        stage('Build&Push') {
+        stage('Build') {
             steps {
-                sh "make image push TARGETARCH=${params.ARCH}"
+                sh "make image TARGETARCH=${params.ARCH}"
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    sh "make image TARGETARCH=${params.ARCH}"
+                    docker.withRegistry(''. 'dockerhub') {
+                        sh "make push TARGETARCH=${params.ARCH}"
+                    }
+                }
             }
         }
         stage('Clean') {
